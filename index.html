@@ -20,7 +20,13 @@ legend{font-weight:700;padding:0 8px;font-size:17px}
 @media(max-width:640px){.grid>*{grid-column:span 12}}
 label{display:block;font-size:14px;color:#344054;margin-bottom:4px}
 label .req{color:var(--err)}
-input[type=text],input[type=tel],input[type=number],input[type=date],select{width:100%;padding:9px 10px;border:1px solid #c3c9d2;border-radius:7px;font:inherit;background:#fff;color:inherit}
+.grid>*{min-width:0}
+input[type=text],input[type=tel],input[type=number],input[type=date],select{display:block;width:100%;min-width:0;max-width:100%;height:44px;margin:0;line-height:1.4;padding:0 10px;border:1px solid #c3c9d2;border-radius:7px;font:inherit;background:#fff;color:inherit}
+select{-webkit-appearance:none;appearance:none;padding-right:34px;text-overflow:ellipsis;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23667085' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 12px center}
+select:disabled{background-color:#f2f4f7;color:#98a2b3}
+input[type=date]{-webkit-appearance:none;appearance:none;text-align:left}
+input[type=date]::-webkit-date-and-time-value{text-align:left;margin:0}
+input[type=date]::-webkit-datetime-edit{padding:0}
 input:focus,select:focus{outline:2px solid var(--brand);outline-offset:1px;border-color:var(--brand)}
 .radios{display:flex;flex-wrap:wrap;gap:6px 18px}
 .radios label{display:flex;align-items:center;gap:6px;font-size:16px;color:var(--ink);margin:0;cursor:pointer}
@@ -34,7 +40,7 @@ button.primary:disabled{opacity:.6;cursor:wait}
 .notice{background:#fff7e0;border:1px solid #ecd28a;border-radius:8px;padding:10px 14px;font-weight:700;margin-bottom:14px;text-align:center}
 .hint{font-size:13px;color:var(--muted);margin-top:4px}
 .err{color:var(--err);font-size:13px;margin-top:3px}
-input.bad,select.bad{border-color:var(--err);background:#fffbfa}
+input.bad,select.bad{border-color:var(--err);background-color:#fffbfa}
 .radios.bad{outline:1px solid var(--err);outline-offset:4px;border-radius:4px}
 #drop{border:2px dashed #c3c9d2;border-radius:10px;padding:16px;text-align:center;background:#fafbfc;transition:background .15s,border-color .15s}
 #drop.over{border-color:var(--brand);background:#fff7e0}
@@ -98,10 +104,8 @@ input.bad,select.bad{border-color:var(--err);background:#fffbfa}
     <fieldset>
       <legend>ข้อมูลพนักงาน</legend>
       <div class="grid">
-        <div class="c3"><label>วันที่เขียนเอกสาร</label><input type="date" id="docDate"></div>
-        <div class="c3"><label>คำนำหน้า <span class="req">*</span></label>
-          <select id="title"><option>นาย</option><option>นาง</option><option>นางสาว</option></select></div>
-        <div class="c6"><label>ชื่อ-นามสกุล <span class="req">*</span></label><input type="text" id="fullName" maxlength="60" autocomplete="name"></div>
+        <div class="c4"><label>วันที่เขียนเอกสาร</label><input type="date" id="docDate"></div>
+        <div class="c8"><label>ชื่อ-นามสกุล <span class="req">*</span></label><input type="text" id="fullName" maxlength="60" autocomplete="name"></div>
         <div class="c6"><label>ฝ่าย/แผนก <span class="req">*</span></label><input type="text" id="dept" maxlength="50"></div>
         <div class="c6"><label>เป็นพนักงานของบริษัท <span class="req">*</span></label><select id="company"><option value="">— เลือกบริษัท —</option><option>บริษัท มหาจักรดีเวลอปเมนท์ จำกัด</option><option>บริษัท มิตซูบิชิ เฮฟวี่ อินดัสตรี่ส์-มหาจักร แอร์ คอนดิชั่นเนอร์ส จำกัด</option></select></div>
         <div class="c6"><label>รหัสพนักงาน <span class="req">*</span></label><input type="text" id="empCode" maxlength="20"></div>
@@ -339,7 +343,7 @@ input.bad,select.bad{border-color:var(--err);background:#fffbfa}
       var ty=r.querySelector('input[type=radio]:checked');
       return {model:r.querySelector(".model").value.trim(),qty:parseInt(r.querySelector(".qty").value,10),type:ty?+ty.value:null,amt:num(r.querySelector(".amt").value)};
     });
-    return {date:v("docDate"),title:v("title"),name:v("fullName"),dept:v("dept"),company:v("company"),code:v("empCode"),phone:v("phone"),
+    return {date:v("docDate"),name:v("fullName"),dept:v("dept"),company:v("company"),code:v("empCode"),phone:v("phone"),
       pay:pay?+pay.value:null,lines:lines,houseNo:v("houseNo"),soi:v("soi"),village:v("village"),road:v("road"),sub:selText("subDistrict"),
       district:selText("district"),province:selText("province"),postal:thDigits(v("postal")),
       contact:[v("siteName"),v("sitePhone")].filter(Boolean).join(" "),remark:v("remark")};
@@ -415,7 +419,7 @@ input.bad,select.bad{border-color:var(--err);background:#fffbfa}
       '<img class="logo" src="'+LOGO+'">'+
       '<div class="datebox">วันที่เขียนเอกสาร<b>'+(dateTh||"....................")+'</b></div>'+
       '<h2>แบบฟอร์มเครื่องปรับอากาศราคาพิเศษสำหรับพนักงาน</h2>'+
-      '<div class="row" style="padding-left:54px">ข้าพเจ้า (นาย/นาง/นางสาว)'+f(d.title+d.name,"flex-grow:2.2")+'ฝ่าย/แผนก'+f(d.dept)+'</div>'+
+      '<div class="row" style="padding-left:54px">ข้าพเจ้า (นาย/นาง/นางสาว)'+f(d.name,"flex-grow:2.2")+'ฝ่าย/แผนก'+f(d.dept)+'</div>'+
       '<div class="row">เป็นพนักงานของบริษัท'+f(d.company,"flex-grow:1.6")+'รหัสพนักงาน'+f(d.code)+'หมายเลขโทรศัพท์'+f(d.phone)+'</div>'+
       '<div class="row">มีความประสงค์ขอใช้สิทธิ์ซื้อเครื่องปรับอากาศมิตซูบิชิ เฮฟวี่ดิวตี้ ในราคาพิเศษ ดังนี้</div>'+
       rows+
@@ -431,7 +435,7 @@ input.bad,select.bad{border-color:var(--err);background:#fffbfa}
       '<div class="bottom">'+
         '<div class="pay"><b class="u">การชำระเงิน</b><br>1. โอนเงินบัญชี บริษัท มหาจักรดีเวลอปเมนท์ จำกัด<br>ธนาคารกรุงเทพ 197-075805-6<br>ธนาคารกสิกรไทย 063-2-79574-2<br>2. บัตรเครดิตออนไลน์<br>ติดต่อไลน์แอด @airmahajak</div>'+
         '<div class="mid"></div>'+
-        '<div class="sign"><div class="row" style="margin-bottom:3px">ลงชื่อ'+f(d.title+d.name,"text-align:center")+'</div>ผู้ยื่นคำขอ</div>'+
+        '<div class="sign"><div class="row" style="margin-bottom:3px">ลงชื่อ'+f(d.name,"text-align:center")+'</div>ผู้ยื่นคำขอ</div>'+
       '</div>'+
       '<div class="foot">**สอบถามเพิ่มเติม 02-3789999 ต่อ 2156 และ 2157 หรือสแกน QR Code**<br><img class="qr" src="'+QR+'"></div>'+
       '<div class="rev">REV.31/01/2568</div>';
