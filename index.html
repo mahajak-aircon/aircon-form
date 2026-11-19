@@ -171,7 +171,7 @@ input.bad,select.bad{border-color:var(--err);background-color:#fffbfa}
       <legend>ตำแหน่งสำหรับจัดส่งหรือติดตั้ง</legend>
       <div class="mapgrid" style="margin-bottom:18px">
         <div>
-          <label for="coords">พิกัดจาก Google Maps (ละติจูด, ลองจิจูด) <span class="req">*</span></label>
+          <label for="coords">พิกัดจาก Google Maps (ละติจูด, ลองจิจูด) <span class="hint">(ไม่บังคับ)</span></label>
           <input type="text" id="coords" maxlength="2000" autocomplete="off" spellcheck="false" placeholder="เช่น 13.756331, 100.501765">
           <div class="hint" id="coordsOk"></div>
         </div>
@@ -596,7 +596,7 @@ input.bad,select.bad{border-color:var(--err);background-color:#fffbfa}
     add($("siteName"),function(){return !v("siteName")?"กรุณากรอกชื่อผู้ติดต่อหน้างาน":/[\d๐-๙]/.test(v("siteName"))?"ชื่อต้องไม่มีตัวเลข กรุณากรอกเบอร์โทรในช่องถัดไป":""});
     add($("sitePhone"),function(){var s=v("sitePhone");return !s?"กรุณากรอกเบอร์โทรผู้ติดต่อหน้างาน":PHONE.test(s)?"":"เบอร์โทรต้องขึ้นต้นด้วย 0 และมี 9-10 หลัก"});
     add($("sitePhone2"),function(){var s=v("sitePhone2");return !s||PHONE.test(s)?"":"เบอร์สำรองต้องขึ้นต้นด้วย 0 และมี 9-10 หลัก"});
-    R.push({el:$("coords"),fn:function(){if(delivNow()!==2)return ""; var c=parseCoords(v("coords")); return !c?"กรุณาใส่พิกัดจาก Google Maps":c.err||""}});
+    R.push({el:$("coords"),fn:function(){if(delivNow()!==2)return ""; var c=parseCoords(v("coords")); return !c?"":c.err||""}});
     add(document.querySelector("input[name=deliv]"),function(){return delivNow()===null?"กรุณาเลือกการรับสินค้า":""});
     return R;
   }
@@ -652,7 +652,7 @@ input.bad,select.bad{border-color:var(--err);background-color:#fffbfa}
         '<div class="sign"><div class="row" style="margin-bottom:3px">ลงชื่อ'+f(d.name,"text-align:center")+'</div>ผู้ยื่นคำขอ</div>'+
       '</div>'+
       '<div class="foot">**สอบถามเพิ่มเติม 02-3789999 ต่อ 2156 และ 2157 หรือสแกน QR Code**<br><img class="qr" src="'+QR+'"></div>'+
-      '<div class="rev">REV.31/01/2568</div>';
+      '<div class="rev">REV.19/11/2569</div>';
   }
 
   // ---------- PDF: draw the laid-out sheet as real text, lines and images (sharp at any zoom) ----------
